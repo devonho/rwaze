@@ -16,16 +16,11 @@
 package rwaze;
 
 
-import com.google.cloud.datastore.Datastore;
-import com.google.cloud.datastore.DatastoreOptions;
-import com.google.cloud.datastore.DateTime;
-import com.google.cloud.datastore.Entity;
-import com.google.cloud.datastore.FullEntity;
-import com.google.cloud.datastore.IncompleteKey;
-import com.google.cloud.datastore.KeyFactory;
-import com.google.cloud.datastore.Query;
-import com.google.cloud.datastore.QueryResults;
-import com.google.cloud.datastore.StructuredQuery;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Key;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -134,14 +129,17 @@ public class DatastoreServlet extends HttpServlet {
 	}
 	
 	private void writeToDatastore() {
-		Datastore datastore = DatastoreOptions.defaultInstance().service();
-		KeyFactory keyFactory = datastore.newKeyFactory().kind("waypoint");
-		IncompleteKey key = keyFactory.kind("waypoint").newKey();
-
-	    FullEntity<IncompleteKey> wp = FullEntity.builder(key)
-	            .set("lat", 1.24)
-	            .set("lng", 1.23)
-	            .build();
-        datastore.add(wp);				
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		//KeyFactory keyFactory = datastore.newKeyFactory().kind("waypoint");
+		//IncompleteKey key = KeyFactory//.kind("waypoint").newKey();
+		//Key k = KeyFactory.createKey()
+		//datastore.
+		//Key k = KeyFactory.createKey("Waypoint", "custom-id");
+		
+	    Entity wp = new Entity("Waypoint");
+        wp.setProperty("lat", 1.24);
+        wp.setProperty("lng", 1.23);
+        datastore.put(wp);
+        				
 	}
 }
