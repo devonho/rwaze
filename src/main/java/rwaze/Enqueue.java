@@ -1,4 +1,4 @@
-package rastmonitor;
+package rwaze;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
